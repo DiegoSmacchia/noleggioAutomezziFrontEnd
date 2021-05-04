@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-custom">
+                    <h4 class="card-title">Lista automezzi</h4>
+                    <p class="card-category">elenco automezzi</p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="text-strong">
+                                <th>
+                                    ID
+                                </th>
+                                <th>
+                                    Targa
+                                </th>
+                                <th>
+                                    Marca
+                                </th>
+                                <th>
+                                    Modello
+                                </th>
+                                <th>
+                                    Km Attuali
+                                </th>
+                                <th>
+                                    Costo
+                                </th>
+                                <th>
+                                    Disponibile
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let automezzo of automezzi">
+                                    <td>
+                                        {{automezzo.id}}
+                                    </td>
+                                    <td>
+                                        {{automezzo.targa}}
+                                    </td>
+                                    <td>
+                                        {{automezzo.marca}}
+                                    </td>
+                                    <td>
+                                        {{automezzo.modello}}
+                                    </td>
+                                    <td>
+                                        {{automezzo.kmAttuali}}
+                                    </td>
+                                    <td>
+                                        {{automezzo.costo}}
+                                    </td>
+                                    <td>
+                                        {{automezzo.mezzoDisponibile ? 'Sì' : 'No'}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
