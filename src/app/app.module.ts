@@ -11,9 +11,6 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { TableListComponent } from './table-list/table-list.component';
-import { TypographyComponent } from './typography/typography.component';
-import { IconsComponent } from './icons/icons.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import {
   AgmCoreModule

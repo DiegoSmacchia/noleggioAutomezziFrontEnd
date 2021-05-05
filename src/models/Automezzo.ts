@@ -6,4 +6,8 @@ export class Automezzo{
     kmAttuali: number;
     costo: number;
     mezzoDisponibile: boolean;
+
+    constructor() {
+        this.id = 0;
+    }
 }

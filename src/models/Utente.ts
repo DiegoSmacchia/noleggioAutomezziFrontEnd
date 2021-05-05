@@ -5,4 +5,9 @@ export class Utente{
   username: string;
   password: string;
   dataNascita: Date;
+  hasPermessi: boolean;
+  indirizzoEmail: string;
+  constructor() {
+    this.id = 0;
+  }
 }

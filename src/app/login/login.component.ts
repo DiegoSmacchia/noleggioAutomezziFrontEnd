@@ -1,10 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { DataService } from 'app/dataService/data.service';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
 import { Utente } from 'models/Utente';
-import { ignoreElements } from 'rxjs-compat/operator/ignoreElements';
+import { forkJoin } from 'rxjs';
 import Swal from 'sweetalert2'
 
 
@@ -23,8 +22,7 @@ export class LoginComponent implements OnInit {
   registrazione: boolean;
   nuovoUtente: Utente;
   confermaPassword: string;
-  usernames: string[] = [];
-  constructor(private httpClient: HttpClient, private notificationsComponent: NotificationsComponent, private router:Router, private dataService: DataService) { }
+  constructor(private notificationsComponent: NotificationsComponent, private router:Router, private dataService: DataService) { }
 
   ngOnInit() {
     this.registrazione = false;
@@ -32,11 +30,9 @@ export class LoginComponent implements OnInit {
   setRegistrazione() {
     this.registrazione = true;
     this.nuovoUtente = new Utente();
-    this.dataService.listUsernames().subscribe(
-      (res: string[]) => {
-        this.usernames = res;
-      }
-    )
+  }
+  setLogin() {
+    this.registrazione = false;
   }
 
   tryLogin() {
@@ -72,28 +68,45 @@ export class LoginComponent implements OnInit {
       });
     }
     else {
-      this.dataService.insertUtente(this.nuovoUtente).subscribe(
-        res => {
-          Swal.fire({
-            title: 'Utente creato con successo!',
-            html: "ora puoi procedere al login!",
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          }).then(function(){
-            window.location.reload();
-          });
-        }, err => {
-          Swal.fire({
-            title: 'Errore!',
-            html: "Qualcosa è andato storto, riprova!",
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
-        }
-      );
+      forkJoin(
+        this.dataService.cercaUsername(this.nuovoUtente.username), this.dataService.cercaIndirizzoEmail(this.nuovoUtente.indirizzoEmail)).subscribe(
+          (res: any[]) => {
+            if (res[0] || res[1]) {
+              if (res[0])
+                messaggio += "il nome utente " + this.nuovoUtente.username + " è già in uso!<br>";
+              if (res[1])
+                  messaggio += "l\'indirizzo Email " + this.nuovoUtente.indirizzoEmail + " è già in uso!<br>";
+              Swal.fire({
+                title: 'Errore, ricontrolla i campi!',
+                html: messaggio,
+                icon: 'error',
+                confirmButtonText: 'Ok'
+              });
+            }
+            else {
+              this.dataService.updateUtente(this.nuovoUtente).subscribe(
+                res => {
+                  Swal.fire({
+                    title: 'Utente creato con successo!',
+                    html: "ora puoi procedere al login!",
+                    icon: 'success',
+                    confirmButtonText: 'Ok'
+                  }).then(function(){
+                    window.location.reload();
+                  });
+                }, err => {
+                  Swal.fire({
+                    title: 'Errore!',
+                    html: "Qualcosa è andato storto, riprova!",
+                    icon: 'error',
+                    confirmButtonText: 'Ok'
+                  });
+                }
+              );
+            }
+          }
+        );
     }
-    
-   
   }
   validateUtente(): string{
     var messaggio: string = "";
@@ -102,14 +115,23 @@ export class LoginComponent implements OnInit {
     if (!this.nuovoUtente.cognome)
       messaggio += "Inserire il cognome!<br>";
     if (!this.nuovoUtente.username)
-      messaggio += "Inserire l\'username!<br>";
+      messaggio += "Inserire l\'username!<br>";   
+    if (!this.nuovoUtente.indirizzoEmail)
+      messaggio += "Inserire l\'indirizzo Email!<br>";
+    else
+      if (!this.nuovoUtente.indirizzoEmail.includes("@"))
+        messaggio += "Inserire un indirizzo Email valido!<br>";    
     if (!this.nuovoUtente.dataNascita)
       messaggio += "Inserire la data di nascita!<br>";
     if (!this.nuovoUtente.password)
       messaggio += "Inserire la password!<br>";
-    else
-      if (this.nuovoUtente.password != this.confermaPassword)
-        messaggio += "Le due password non corrispondono!<br>";
+    else {
+      if (this.nuovoUtente.password.length < 5)
+        messaggio += "La password deve essere lunga almeno 5 caratteri!<br>";
+      else
+        if (this.nuovoUtente.password != this.confermaPassword)
+          messaggio += "Le due password non corrispondono!<br>";
+    }
     return messaggio;
   }
 }
