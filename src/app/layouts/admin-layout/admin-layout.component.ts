@@ -5,6 +5,8 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
+import { SharedService } from 'app/sharedService/shared.service';
+import { DataService } from 'app/dataService/data.service';
 
 @Component({
   selector: 'app-admin-layout',
@@ -16,9 +18,10 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
 
-  constructor( public location: Location, private router: Router) {}
+  constructor( public location: Location, private router: Router, private sharedService: SharedService, private dataService:DataService) {}
 
-  ngOnInit() {
+    ngOnInit() {
+    this.sharedService.checkCredentials();
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
@@ -130,16 +133,6 @@ export class AdminLayoutComponent implements OnInit {
   ngAfterViewInit() {
       this.runOnRouteChange();
   }
-  isMaps(path){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      titlee = titlee.slice( 1 );
-      if(path == titlee){
-          return false;
-      }
-      else {
-          return true;
-      }
-  }
   runOnRouteChange(): void {
     if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
@@ -155,4 +148,11 @@ export class AdminLayoutComponent implements OnInit {
       return bool;
   }
 
+  userLoggedIn() {
+    var logged = false;
+    if (sessionStorage.getItem("userId") && sessionStorage.getItem("userPsw") &&
+        this.dataService.checkLogin(sessionStorage.getItem("userId"), sessionStorage.getItem("userPsw")))
+        logged = true;
+    return logged;
+}
 }

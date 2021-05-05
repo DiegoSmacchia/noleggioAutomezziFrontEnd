@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'app/dataService/data.service';
+import { SharedService } from 'app/sharedService/shared.service';
 
 
 @Component({
@@ -10,10 +11,12 @@ import { Component, OnInit } from '@angular/core';
 export class ListAutomezziComponent implements OnInit {
   menuItems: any[];
   automezzi: any[] = [];
-  constructor(private httpClient: HttpClient) { }
+  constructor(private sharedService: SharedService,
+    private dataService: DataService) { }
 
   ngOnInit() {
-    this.listAutomezzi().subscribe(
+    this.sharedService.checkCredentials();
+    this.dataService.listAutomezzi().subscribe(
       (res:any) => {
         this.automezzi = res;
         console.log(res);
@@ -23,7 +26,5 @@ export class ListAutomezziComponent implements OnInit {
     )
   }
 
-  listAutomezzi() {
-    return this.httpClient.get("https://localhost:44377/api/automezzi/list");
-  }
+
 }
