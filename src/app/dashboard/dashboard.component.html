@@ -1,1 +1,21 @@
-dashboard
+<div class="container-fluid" *ngIf="!loading">
+    <div *ngIf="utente.hasPermessi">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="card-title">Prenotazioni</h4>
+                    </div>
+                    <div class="card-body">
+                        <span>Ci sono {{prenotazioniInRichiesta}} richieste di prenotazioni da gestire.</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="link-utente" href="#/listaPrenotazioni">vai a Prenotazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="loader" *ngIf="loading"></div>

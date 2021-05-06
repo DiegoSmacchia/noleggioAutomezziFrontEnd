@@ -5,3 +5,12 @@
 .immagine-sidebar{
     margin-left: 0%;
 }
+
+.item-notifica{
+    padding-left: 3%;
+    word-wrap:break-word !important;
+    border-bottom: 1px solid #dddddd;
+}
+.item-notifica:hover{
+    background-color: #dddddd;
+}

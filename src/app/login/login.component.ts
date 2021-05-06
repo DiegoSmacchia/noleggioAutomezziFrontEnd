@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 @Component({
   selector: 'login-component',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css', '../../assets/scss/spinner.scss']
 })
 
 
@@ -22,10 +22,12 @@ export class LoginComponent implements OnInit {
   registrazione: boolean;
   nuovoUtente: Utente;
   confermaPassword: string;
+  loading: boolean;
   constructor(private notificationsComponent: NotificationsComponent, private router:Router, private dataService: DataService) { }
 
   ngOnInit() {
     this.registrazione = false;
+    this.loading = false;
   }
   setRegistrazione() {
     this.registrazione = true;
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit {
       }, err => {
         var messaggio: string = "";
         switch (err.status) {
-          case 403:
+          case 401:
             messaggio = "Username o password Sbagliati!";
             break;
           default:
@@ -58,6 +60,7 @@ export class LoginComponent implements OnInit {
     );
   }
   insertUtente() {
+    this.loading = true;
     var messaggio = this.validateUtente();
     if (messaggio) {
       Swal.fire({
@@ -66,6 +69,7 @@ export class LoginComponent implements OnInit {
         icon: 'error',
         confirmButtonText: 'Ok'
       });
+      this.loading = false;
     }
     else {
       forkJoin(
@@ -82,25 +86,36 @@ export class LoginComponent implements OnInit {
                 icon: 'error',
                 confirmButtonText: 'Ok'
               });
+              this.loading = false;
             }
             else {
               this.dataService.updateUtente(this.nuovoUtente).subscribe(
                 res => {
+                  this.loading = false;
                   Swal.fire({
                     title: 'Utente creato con successo!',
                     html: "ora puoi procedere al login!",
                     icon: 'success',
                     confirmButtonText: 'Ok'
-                  }).then(function(){
+                  }).then(function () {
                     window.location.reload();
                   });
                 }, err => {
+                  switch (err.status) {
+                    case 400:
+                      messaggio = "Ricontrolla i campi inseriti!";
+                      break;
+                    default:
+                      messaggio = "Qualcosa è andato storto, riprova!";
+                      break
+                }
                   Swal.fire({
                     title: 'Errore!',
-                    html: "Qualcosa è andato storto, riprova!",
+                    html: messaggio,
                     icon: 'error',
                     confirmButtonText: 'Ok'
                   });
+                  this.loading = false;
                 }
               );
             }

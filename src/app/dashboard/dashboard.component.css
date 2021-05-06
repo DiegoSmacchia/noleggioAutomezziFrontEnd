@@ -1,3 +1,13 @@
 .filler{
     flex:1;
 }
+.link-utente{
+    color: #00aeff !important;
+}
+.link-utente:visited{
+    color:#00aeff !important;
+}
+.link-utente:hover{
+    text-decoration: underline;
+    font-weight: bold;
+}

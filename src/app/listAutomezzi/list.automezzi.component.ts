@@ -9,7 +9,7 @@ import Swal from 'sweetalert2'
 @Component({
   selector: 'lista-automezzi',
   templateUrl: './list.automezzi.component.html',
-  styleUrls: ['./list.automezzi.component.css', '../../../assets/scss/spinner.scss']
+  styleUrls: ['./list.automezzi.component.css', '../../assets/scss/spinner.scss', '../../assets/css/fab.css', '../../assets/css/icona.nessun.record.css']
 })
 export class ListAutomezziComponent implements OnInit {
   loading: boolean;

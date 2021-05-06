@@ -10,10 +10,11 @@ import {MatRippleModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
-import { ListAutomezziComponent } from 'app/automezzi/list/list.automezzi.component';
 import { LoginComponent } from 'app/login/login.component';
 import { SharedService } from 'app/sharedService/shared.service';
 import { AccountComponent } from 'app/account/account.component';
+import { ListAutomezziComponent } from 'app/listAutomezzi/list.automezzi.component';
+import { ListPrenotazioniComponent } from 'app/listPrenotazioni/list.prenotazioni.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { AccountComponent } from 'app/account/account.component';
 
     ListAutomezziComponent,
     LoginComponent,
-    AccountComponent
+    AccountComponent,
+    ListPrenotazioniComponent
   ],
   providers: []
 })

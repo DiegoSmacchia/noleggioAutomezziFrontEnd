@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { SharedService } from 'app/sharedService/shared.service';
 import { Utente } from 'models/Utente';
 import { Automezzo } from 'models/Automezzo';
+import { PrenotazioneFull } from 'models/full/PrenotazioneFull';
+import { Prenotazione } from 'models/Prenotazione';
 
 
 
@@ -18,8 +20,8 @@ export class DataService {
     this.baseUrl= "https://44377/API/" ;
   }
 
+  /************************************UTENTI************************************/
   tryLogin(username:string, password:string) {
-
     let body = new FormData();    
     body.append('username' , username);
     body.append('password' , password);
@@ -50,9 +52,12 @@ export class DataService {
     return this.httpClient.get("https://localhost:44377/api/utenti/CercaIndirizzoEmail/" + indirizzoEmail);
   }
 
-
+  /************************************AUTOMEZZI************************************/
   listAutomezzi() {
     return this.httpClient.get("https://localhost:44377/api/automezzi/list");
+  }
+  listAutomezziDisponibili() {
+    return this.httpClient.get("https://localhost:44377/api/automezzi/listDisponibili");
   }
   getAutomezzoById(id: number) {
     return this.httpClient.get("https://localhost:44377/api/automezzi/getById/" + id);
@@ -69,5 +74,34 @@ export class DataService {
     body.append('kmAttuali', automezzo.kmAttuali.toString());
     body.append('costo', automezzo.costo.toString());
     return this.httpClient.post("https://localhost:44377/api/automezzi/Update", body);
+  }
+
+  /************************************PRENOTAZIONI************************************/
+  listPrenotazioni(id: number) {
+    return this.httpClient.get("https://localhost:44377/api/Prenotazioni/List/" + (id && id > 0 ? id : ''));
+  }
+  updatePrenotazione(prenotazione: PrenotazioneFull) {
+    let body = new FormData();
+    body.append('id', prenotazione.id.toString());
+    body.append('idUtente' , prenotazione.utente.id.toString());
+    body.append('idAutomezzo' , prenotazione.automezzo.id.toString());
+    body.append('dataInizio', prenotazione.dataInizio.toLocaleDateString());
+    body.append('dataFine', prenotazione.dataFine.toLocaleDateString());
+    body.append('stato', prenotazione.stato.toString());
+    return this.httpClient.post("https://localhost:44377/api/Prenotazioni/Update", body);
+  }
+  accettaPrenotazione(id: number) {
+    let body = new FormData();
+    body.append('id', id.toString());
+    return this.httpClient.post("https://localhost:44377/api/Prenotazioni/AccettaPrenotazione", body)
+  }
+  rifiutaPrenotazione(id: number) {
+    let body = new FormData();
+    body.append('id', id.toString());
+    return this.httpClient.post("https://localhost:44377/api/Prenotazioni/RifiutaPrenotazione", body)
+  }
+  /************************************NOTIFICHE************************************/
+  listNotifiche(idUtente: number) {
+    return this.httpClient.get("https://localhost:44377/api/Notifiche/List/" + idUtente);
   }
 }

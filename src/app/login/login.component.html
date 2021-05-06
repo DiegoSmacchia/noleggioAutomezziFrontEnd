@@ -13,17 +13,20 @@
                 <span class="filler"></span>
             </div>
             <div class="card-body">
-                <mat-form-field>
-                    <input matInput type="text" placeholder="Username" [(ngModel)]="username">
-                </mat-form-field>
-                <mat-form-field>
-                    <input matInput type="password" placeholder="Password" [(ngModel)]="password">
-                </mat-form-field>
-                <div class="row">
-                    <span class="filler"></span>
-                    <button type="submit" mat-flat-button color="primary" (click)="tryLogin()">Login</button>
-                    <span class="filler"></span>
-                </div>
+                <form>
+                    <mat-form-field>
+                        <input matInput type="text" name="username" placeholder="Username" [(ngModel)]="username">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <input matInput type="password" name="password" placeholder="Password" [(ngModel)]="password">
+                    </mat-form-field>
+                    <div class="row">
+                        <span class="filler"></span>
+                        <button type="submit" mat-flat-button color="primary" (click)="tryLogin()">Login</button>
+                        <span class="filler"></span>
+                    </div>
+                </form>
+                
                 <br>
                 <div class="row">
                     <span class="filler"></span>
@@ -37,66 +40,72 @@
 
     <div class="col-md-6 col-xs-12" *ngIf="registrazione">
         <div class="card">
-            <div class="card-header card-header-custom" style="display: flex;">
-                <span class="filler"></span>
-                <h4 class="card-title">Registrazione Noleggio Automezzi</h4>
-                <span class="filler"></span>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="text" [(ngModel)]="nuovoUtente.cognome" placeholder="Cognome" required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="text" [(ngModel)]="nuovoUtente.nome" placeholder="Nome" required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="date" required [(ngModel)]="nuovoUtente.dataNascita">
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="text" [(ngModel)]="nuovoUtente.username" placeholder="Username" required>
-                        </mat-form-field>
-                    </div>
-                </div>  
-                <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="password" [(ngModel)]="nuovoUtente.password" placeholder="Password" required>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="password" [(ngModel)]="confermaPassword" placeholder="Conferma Password" required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-xs-12">
-                        <mat-form-field>
-                            <input matInput type="email" [(ngModel)]="nuovoUtente.indirizzoEmail" placeholder="Indirizzo Email" required>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
+            <div *ngIf="!loading">
+                <div class="card-header card-header-custom" style="display: flex;">
                     <span class="filler"></span>
-                    <button type="submit" mat-flat-button color="primary" (click)="insertUtente()">Registrati</button>
+                    <h4 class="card-title">Registrazione Noleggio Automezzi</h4>
                     <span class="filler"></span>
                 </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="text" [(ngModel)]="nuovoUtente.cognome" name="cognome" placeholder="Cognome" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="text" [(ngModel)]="nuovoUtente.nome" name="nome" placeholder="Nome" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="date" name="dataNascita" required [(ngModel)]="nuovoUtente.dataNascita">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="text" [(ngModel)]="nuovoUtente.username" name="username" placeholder="Username" required>
+                                </mat-form-field>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="password" [(ngModel)]="nuovoUtente.password" name="password" placeholder="Password" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="password" [(ngModel)]="confermaPassword" name="confermaPassword" placeholder="Conferma Password" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <input matInput type="email" [(ngModel)]="nuovoUtente.indirizzoEmail" name="indirizzoEmail"placeholder="Indirizzo Email" required>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class="filler"></span>
+                            <button type="submit" mat-flat-button color="primary" (click)="insertUtente()">Registrati</button>
+                            <span class="filler"></span>
+                        </div>
+                    </form>
+                    <div class="row">
+                        <span class="filler"></span>
+                        <a class="link-utente" (click)="setLogin()">Torna al Login</a>
+                        <span class="filler"></span>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <span class="filler"></span>
-                <a class="link-utente" (click)="setLogin()">Torna al Login</a>
-                <span class="filler"></span>
-            </div>
+            
+            <div class="loader" *ngIf="loading"></div>
         </div>
     </div>
     

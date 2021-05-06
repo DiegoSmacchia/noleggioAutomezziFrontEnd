@@ -40,7 +40,7 @@
                 <div class="card-body">
                     <div class="loader" *ngIf="loading"></div>
 
-                    <div class="table-responsive" *ngIf="!loading">
+                    <div class="table-responsive" *ngIf="!loading && automezzi.length > 0">
                         <table class="table">
                             <thead class="text-strong">
                                 <th>
@@ -99,6 +99,19 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    
+                    <div *ngIf="automezzi.length == 0 && !loading">
+                        <div class="row">
+                            <span class="filler"></span>
+                            <i class="fas fa-question icona-nessun-record"></i>
+                            <span class="filler"></span>
+                        </div>
+                        <div class="row">
+                            <span class="filler"></span>
+                            <span>Nessun automezzo presente!</span>
+                            <span class="filler"></span>
+                        </div>
                     </div>
                 </div>
             </div>

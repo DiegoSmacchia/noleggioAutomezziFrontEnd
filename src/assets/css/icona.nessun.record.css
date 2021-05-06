@@ -1,0 +1,35 @@
+.icona-nessun-record{
+    font-size: 700%;
+    padding:2.5%;
+  }
+  .icona-nessun-record:hover{
+    animation-name: ruotaPuntoInterrogativo;
+    animation-duration: 1s;
+  }
+  @keyframes ruotaPuntoInterrogativo {
+    0% {-webkit-transform: rotate(20deg);
+      -moz-transform: rotate(20deg);
+      -o-transform: rotate(20deg);
+      -ms-transform: rotate(20deg);
+      transform: rotate(20deg);}
+    
+    25%{-webkit-transform: rotate(-20deg);
+      -moz-transform: rotate(-20deg);
+      -o-transform: rotate(-20deg);
+      -ms-transform: rotate(-20deg);
+      transform: rotate(-20deg);}
+    
+    75% {-webkit-transform: rotate(20deg);
+      -moz-transform: rotate(20deg);
+      -o-transform: rotate(20deg);
+      -ms-transform: rotate(20deg);
+      transform: rotate(20deg);}
+      
+    100%{-webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      -o-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+      transform: rotate(0deg);}
+  }
+    
+  
