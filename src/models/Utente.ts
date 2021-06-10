@@ -7,6 +7,7 @@ export class Utente{
   dataNascita: Date;
   hasPermessi: boolean;
   indirizzoEmail: string;
+  
   constructor() {
     this.id = 0;
   }

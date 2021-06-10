@@ -10,3 +10,16 @@
 .icona-rossa{
   color: #ad1010;
 }
+@media (max-width: 900px) {
+  .desktop-only{
+    display: none;
+  }
+  td, th{
+    font-size: smaller;
+  }
+}
+@media (min-width: 901px) {
+  .mobile-only{
+    display: none;
+  }
+}

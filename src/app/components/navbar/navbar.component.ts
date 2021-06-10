@@ -4,7 +4,6 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
 import { Router } from '@angular/router';
 import { SharedService } from 'app/sharedService/shared.service';
 import { DataService } from 'app/dataService/data.service';
-import { threadId } from 'worker_threads';
 import { Utente } from 'models/Utente';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
 

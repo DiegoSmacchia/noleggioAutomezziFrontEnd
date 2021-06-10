@@ -3,7 +3,6 @@ import { DataService } from 'app/dataService/data.service';
 import { NotificationsComponent } from 'app/notifications/notifications.component';
 import { SharedService } from 'app/sharedService/shared.service';
 import { Automezzo } from 'models/Automezzo';
-import { PrenotazioneFull } from 'models/full/PrenotazioneFull';
 import { Prenotazione } from 'models/Prenotazione';
 import { Utente } from 'models/Utente';
 import { forkJoin } from 'rxjs';
@@ -17,11 +16,11 @@ import Swal from 'sweetalert2'
 })
 export class ListPrenotazioniComponent implements OnInit {
   loading: boolean;
-  prenotazioni: PrenotazioneFull[] = [];
+  prenotazioni: Prenotazione[] = [];
   utente: Utente;
   automezzi: Automezzo[] = [];
   inserimento: boolean;
-  prenotazione: PrenotazioneFull;
+  prenotazione: Prenotazione;
   oggi: string;
   dataInizioPrenotazione: string;
   dataFinePrenotazione: string;
@@ -40,7 +39,7 @@ export class ListPrenotazioniComponent implements OnInit {
         this.automezzi = res[1];
         var idUtente = this.utente.hasPermessi ? null : this.utente.id;
         this.dataService.listPrenotazioni(idUtente).subscribe(
-          (res: PrenotazioneFull[]) => {
+          (res: Prenotazione[]) => {
             this.prenotazioni = res;
             this.loading = false;
           }, err => {
@@ -59,7 +58,7 @@ export class ListPrenotazioniComponent implements OnInit {
     this.loading = true;
     var idUtente = this.utente.hasPermessi ? null : this.utente.id;
     this.dataService.listPrenotazioni(idUtente).subscribe(
-      (res:PrenotazioneFull[]) => {
+      (res:Prenotazione[]) => {
         this.prenotazioni = res;
         this.loading = false;
       }, err => {
@@ -71,12 +70,14 @@ export class ListPrenotazioniComponent implements OnInit {
   aggiungiPrenotazione() {
     this.inserimento = true;
     this.oggi = new Date().toISOString().slice(0, 10);
-    this.prenotazione = new PrenotazioneFull();
+    this.prenotazione = new Prenotazione();
     this.prenotazione.utente = this.utente;
   }
-  modificaPrenotazione(prenotazione: PrenotazioneFull) {
+  modificaPrenotazione(prenotazione: Prenotazione) {
     this.inserimento = true;
-    this.prenotazione = new PrenotazioneFull();
+    this.prenotazione = new Prenotazione();
+    this.dataInizioPrenotazione = prenotazione.dataInizio.toString().substring(0, 10);
+    this.dataFinePrenotazione = prenotazione.dataFine.toString().substring(0, 10);
     Object.assign(this.prenotazione, prenotazione);
   }
   annullaInserimento() {
@@ -106,7 +107,7 @@ export class ListPrenotazioniComponent implements OnInit {
           })
           this.inserimento = false;
           this.reloadData();
-          this.prenotazione = new PrenotazioneFull();
+          this.prenotazione = new Prenotazione();
         }, err => {
           var messaggio: string = "";
           switch (err.status) {
@@ -167,7 +168,7 @@ export class ListPrenotazioniComponent implements OnInit {
       messaggio += "Scegliere una data di fine a partire dal " + this.prenotazione.dataInizio.toLocaleDateString() + "!<br>";
     return messaggio;
   }
-  accettaPrenotazione(prenotazione: PrenotazioneFull) {
+  accettaPrenotazione(prenotazione: Prenotazione) {
     Swal.fire({
       title: 'Accetta Prenotazione',
       html: "Vuoi <strong>accettare</strong> questa prenotazione?",
@@ -202,7 +203,7 @@ export class ListPrenotazioniComponent implements OnInit {
       }
     });
   }
-  rifiutaPrenotazione(prenotazione: PrenotazioneFull) {
+  rifiutaPrenotazione(prenotazione: Prenotazione) {
     Swal.fire({
       title: 'Rifiuta Prenotazione',
       html: "Vuoi <strong>rifiutare</strong> questa prenotazione?",

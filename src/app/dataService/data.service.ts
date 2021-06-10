@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { SharedService } from 'app/sharedService/shared.service';
 import { Utente } from 'models/Utente';
 import { Automezzo } from 'models/Automezzo';
-import { PrenotazioneFull } from 'models/full/PrenotazioneFull';
 import { Prenotazione } from 'models/Prenotazione';
+import { Meccanico } from 'models/Meccanico';
+import { Intervento } from 'models/Intervento';
+import { Guasto } from 'models/Guasto';
+import { Multa } from 'models/Multa';
+import { Scadenza } from 'models/Scadenza';
+import { AutomezzoScadenza } from 'models/AutomezzoScadenza';
 
 
 
@@ -17,7 +21,7 @@ export class DataService {
   private _options = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
   
   constructor(private httpClient : HttpClient) {
-    this.baseUrl= "https://44377/API/" ;
+    this.baseUrl = "https://localhost:44377/API/";
   }
 
   /************************************UTENTI************************************/
@@ -25,14 +29,14 @@ export class DataService {
     let body = new FormData();    
     body.append('username' , username);
     body.append('password' , password);
-    return this.httpClient.post("https://localhost:44377/api/utenti/login", body);
+    return this.httpClient.post(this.baseUrl + "utenti/login", body);
   }
   checkLogin(userId:string, encryptedPassword: string) { 
     let body = new FormData();    
     body.append('userId' , userId);
     body.append('password' , encryptedPassword);
    
-    return this.httpClient.post("https://localhost:44377/api/utenti/checkLogin", body);
+    return this.httpClient.post(this.baseUrl + "utenti/checkLogin", body);
   }
   updateUtente(utente: Utente) {
     let body = new FormData();
@@ -43,27 +47,27 @@ export class DataService {
     body.append('cognome', utente.cognome);
     body.append('dataNascita', utente.dataNascita.toString());
     body.append('indirizzoEmail', utente.indirizzoEmail);
-    return this.httpClient.post("https://localhost:44377/api/utenti/Update", body);
+    return this.httpClient.post(this.baseUrl + "utenti/Update", body);
   }
   cercaUsername(username:string) {
-    return this.httpClient.get("https://localhost:44377/api/utenti/CercaUsername/" + username);
+    return this.httpClient.get(this.baseUrl + "utenti/CercaUsername/" + username);
   }
   cercaIndirizzoEmail(indirizzoEmail:string) {
-    return this.httpClient.get("https://localhost:44377/api/utenti/CercaIndirizzoEmail/" + indirizzoEmail);
+    return this.httpClient.get(this.baseUrl + "utenti/CercaIndirizzoEmail/" + indirizzoEmail);
   }
 
   /************************************AUTOMEZZI************************************/
   listAutomezzi() {
-    return this.httpClient.get("https://localhost:44377/api/automezzi/list");
+    return this.httpClient.get(this.baseUrl + "automezzi/list");
   }
   listAutomezziDisponibili() {
-    return this.httpClient.get("https://localhost:44377/api/automezzi/listDisponibili");
+    return this.httpClient.get(this.baseUrl + "automezzi/listDisponibili");
   }
   getAutomezzoById(id: number) {
-    return this.httpClient.get("https://localhost:44377/api/automezzi/getById/" + id);
+    return this.httpClient.get(this.baseUrl + "automezzi/getById/" + id);
   }
   getAutomezzoByTarga(targa: string) {
-    return this.httpClient.get("https://localhost:44377/api/automezzi/getByTarga/" + targa);
+    return this.httpClient.get(this.baseUrl + "automezzi/getByTarga/" + targa);
   }
   updateAutomezzo(automezzo: Automezzo) {
     let body = new FormData();
@@ -73,14 +77,47 @@ export class DataService {
     body.append('modello', automezzo.modello);
     body.append('kmAttuali', automezzo.kmAttuali.toString());
     body.append('costo', automezzo.costo.toString());
-    return this.httpClient.post("https://localhost:44377/api/automezzi/Update", body);
+    return this.httpClient.post(this.baseUrl + "automezzi/Update", body);
+  }
+  /************************************INTERVENTI************************************/
+  listInterventi() {
+    return this.httpClient.get(this.baseUrl + "Interventi/ListInterventi");
+  }
+  listInterventiByIdAutomezzo(idAutomezzo: number) {
+    return this.httpClient.get(this.baseUrl + "Interventi/ListInterventiByIdAutomezzo/" + idAutomezzo);
+  }
+  updateIntervento(intervento: Intervento) {
+    let body = new FormData();
+    body.append('id', intervento.id.toString());
+    body.append('idMeccanico' , intervento.meccanico.id.toString());
+    body.append('idAutomezzo' , intervento.automezzo.id.toString());
+    body.append('idGuasto', intervento.guasto.id.toString());
+    body.append('dataInizio', intervento.dataInizio.toLocaleDateString());
+    body.append('dataFine', intervento.dataFine.toLocaleDateString());
+    return this.httpClient.post(this.baseUrl + "Interventi/UpdateIntervento", body);
+  }
+  /************************************GUASTI************************************/
+  listGuasti() {
+    return this.httpClient.get(this.baseUrl + "Interventi/ListGuasti");
+  }
+  listGuastiByIdAutomezzo(idAutomezzo: number) {
+    return this.httpClient.get(this.baseUrl + "Interventi/ListGuastiByIdAutomezzo/" + idAutomezzo);
+  }
+  updateGuasto(guasto: Guasto) {
+    let body = new FormData();
+    body.append('id', guasto.id.toString());
+    body.append('idUtente' , guasto.utente.id.toString());
+    body.append('idAutomezzo' , guasto.automezzo.id.toString());
+    body.append('descrizione', guasto.descrizione);
+    body.append('data', guasto.data.toLocaleDateString());
+    return this.httpClient.post(this.baseUrl + "Interventi/UpdateGuasto", body);
   }
 
   /************************************PRENOTAZIONI************************************/
   listPrenotazioni(id: number) {
-    return this.httpClient.get("https://localhost:44377/api/Prenotazioni/List/" + (id && id > 0 ? id : ''));
+    return this.httpClient.get(this.baseUrl + "Prenotazioni/List/" + (id && id > 0 ? id : ''));
   }
-  updatePrenotazione(prenotazione: PrenotazioneFull) {
+  updatePrenotazione(prenotazione: Prenotazione) {
     let body = new FormData();
     body.append('id', prenotazione.id.toString());
     body.append('idUtente' , prenotazione.utente.id.toString());
@@ -88,20 +125,75 @@ export class DataService {
     body.append('dataInizio', prenotazione.dataInizio.toLocaleDateString());
     body.append('dataFine', prenotazione.dataFine.toLocaleDateString());
     body.append('stato', prenotazione.stato.toString());
-    return this.httpClient.post("https://localhost:44377/api/Prenotazioni/Update", body);
+    return this.httpClient.post(this.baseUrl + "Prenotazioni/Update", body);
   }
   accettaPrenotazione(id: number) {
     let body = new FormData();
     body.append('id', id.toString());
-    return this.httpClient.post("https://localhost:44377/api/Prenotazioni/AccettaPrenotazione", body)
+    return this.httpClient.post(this.baseUrl + "Prenotazioni/AccettaPrenotazione", body)
   }
   rifiutaPrenotazione(id: number) {
     let body = new FormData();
     body.append('id', id.toString());
-    return this.httpClient.post("https://localhost:44377/api/Prenotazioni/RifiutaPrenotazione", body)
+    return this.httpClient.post(this.baseUrl + "Prenotazioni/RifiutaPrenotazione", body)
   }
+  /************************************MECCANICI************************************/
+  listMeccanici() {
+    return this.httpClient.get(this.baseUrl + "Meccanici/ListMeccanici");
+  }
+  updateMeccanico(meccanico: Meccanico) {
+    let body = new FormData();
+    body.append('id', meccanico.id.toString());
+    body.append('ragioneSociale' , meccanico.ragioneSociuale);
+    body.append('indirizzo' , meccanico.indirizzo);
+    body.append('telefono', meccanico.telefono);
+    return this.httpClient.post(this.baseUrl + "Meccanici/UpdateMeccanico", body);
+  }
+  /************************************MULTE************************************/
+  listMulte() {
+    return this.httpClient.get(this.baseUrl + "Multe/ListMulte");
+  }
+  listMulteByIdUtente(idUtente: number) {
+    return this.httpClient.get(this.baseUrl + "Multe/ListMulte");
+  }
+  updateMulta(multa: Multa) {
+    let body = new FormData();
+    body.append('id', multa.id.toString());
+    body.append('idPrenotazione' , multa.prenotazione.id.toString());
+    body.append('importo' , multa.importo.toString());
+    body.append('data', multa.data.toLocaleDateString());
+
+    return this.httpClient.post(this.baseUrl + "Multe/UpdateMulta", body);
+  }
+  /************************************SCADENZE************************************/
+  listScadenze() {
+    return this.httpClient.get(this.baseUrl + "Scadenze/ListScadenze");
+  }
+  updateScadenza(scadenza: Scadenza) {
+    let body = new FormData();
+    body.append('id', scadenza.id.toString());
+    body.append('scadenza' , scadenza.scadenza);
+    return this.httpClient.post(this.baseUrl + "Scadenze/UpdateScadenza", body);
+  }
+  /************************************AUTOMEZZISCADENZE************************************/
+  listAutomezziScadenze(idAutomezzo: number) {
+    return this.httpClient.get(this.baseUrl + "Scadenze/ListAutomezziScadenze/" + idAutomezzo);
+  }
+  updateAutomezzoScadenza(scadenza: AutomezzoScadenza) {
+    let body = new FormData();
+    body.append('id', scadenza.id.toString());
+    body.append('idScadenza', scadenza.scadenza.id.toString());
+    body.append('idAutomezzo' , scadenza.automezzo.id.toString());
+    body.append('dataInizio', scadenza.dataInizio.toLocaleDateString());
+    body.append('dataFine', scadenza.dataFine.toLocaleDateString());
+    body.append('kmIniziali', scadenza.kmIniziali.toString());
+    body.append('dataPagamento', scadenza.dataPagamento.toLocaleDateString());
+
+    return this.httpClient.post(this.baseUrl + "Scadenze/UpdateScadenza", body);
+  }
+
   /************************************NOTIFICHE************************************/
   listNotifiche(idUtente: number) {
-    return this.httpClient.get("https://localhost:44377/api/Notifiche/List/" + idUtente);
+    return this.httpClient.get(this.baseUrl + "Notifiche/List/" + idUtente);
   }
 }
