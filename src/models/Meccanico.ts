@@ -1,6 +1,6 @@
 export class Meccanico {
   public id: number;
-  public ragioneSociuale: string;
+  public ragioneSociale: string;
   public indirizzo: string;
   public telefono: string;
 

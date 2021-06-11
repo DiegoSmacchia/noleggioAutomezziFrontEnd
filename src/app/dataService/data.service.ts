@@ -144,10 +144,16 @@ export class DataService {
   updateMeccanico(meccanico: Meccanico) {
     let body = new FormData();
     body.append('id', meccanico.id.toString());
-    body.append('ragioneSociale' , meccanico.ragioneSociuale);
+    body.append('ragioneSociale' , meccanico.ragioneSociale);
     body.append('indirizzo' , meccanico.indirizzo);
     body.append('telefono', meccanico.telefono);
     return this.httpClient.post(this.baseUrl + "Meccanici/UpdateMeccanico", body);
+  }
+  deleteMeccanico(idMeccanico: number) {
+    let body = new FormData();
+    body.append('id', idMeccanico.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Meccanici/DeleteMeccanico", body);
   }
   /************************************MULTE************************************/
   listMulte() {

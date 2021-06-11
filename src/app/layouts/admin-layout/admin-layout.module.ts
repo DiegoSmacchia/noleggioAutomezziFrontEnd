@@ -15,6 +15,8 @@ import { SharedService } from 'app/sharedService/shared.service';
 import { AccountComponent } from 'app/account/account.component';
 import { ListAutomezziComponent } from 'app/listAutomezzi/list.automezzi.component';
 import { ListPrenotazioniComponent } from 'app/listPrenotazioni/list.prenotazioni.component';
+import { ListMeccaniciComponent } from 'app/listMeccanici/list.meccanici.component';
+import { ListScadenzeComponent } from 'app/listScadenze/list.scadenze.component';
 
 @NgModule({
   imports: [
@@ -35,7 +37,9 @@ import { ListPrenotazioniComponent } from 'app/listPrenotazioni/list.prenotazion
     ListAutomezziComponent,
     LoginComponent,
     AccountComponent,
-    ListPrenotazioniComponent
+    ListPrenotazioniComponent,
+    ListMeccaniciComponent,
+    ListScadenzeComponent
   ],
   providers: []
 })

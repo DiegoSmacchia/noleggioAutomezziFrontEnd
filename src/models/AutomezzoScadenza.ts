@@ -12,5 +12,7 @@ export class AutomezzoScadenza{
 
   constructor() {
     this.id = 0;
+    this.automezzo = new Automezzo();
+    this.scadenza = new Scadenza();
   }
 }

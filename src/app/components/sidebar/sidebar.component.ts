@@ -19,7 +19,10 @@ export const ROUTES: RouteInfo[] = [
     { path: '/account', title: 'Account',  icon: 'account_circle', class: '', onlyAdmin: false },
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', onlyAdmin: false },
   { path: '/listaAutomezzi', title: 'Lista Automezzi', icon: 'directions_car', class: '', onlyAdmin: true },
-  { path: '/listaPrenotazioni', title: 'Lista Prenotazioni', icon: 'event', class: '', onlyAdmin: false }
+  { path: '/listaPrenotazioni', title: 'Lista Prenotazioni', icon: 'event', class: '', onlyAdmin: false },
+  { path: '/listaMeccanici', title: 'Lista Meccanici', icon: 'build', class: '', onlyAdmin: true },
+  { path: '/listaScadenze', title: 'Lista Scadenze', icon: 'timer', class: '', onlyAdmin: true }
+
 ]
    
 
