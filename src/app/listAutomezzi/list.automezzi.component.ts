@@ -122,7 +122,7 @@ export class ListAutomezziComponent implements OnInit {
           res => {
             Swal.fire({
               title: 'Eliminato!',
-              html: "Meccanico eliminato con successo!",
+              html: "Automezzo eliminato con successo!",
               icon: 'success',
               confirmButtonText: 'Ok'
             });

@@ -56,7 +56,6 @@ export class ListScadenzeComponent implements OnInit {
       (res:any[]) => {
         this.scadenze = res[0];
         this.autoScadenze = res[1];
-        console.log(this.autoScadenze);
         this.loading = false;
       }, err => {
         this.notificationsComponent.showNotification("top", "center", "Errore durante il recupero delle scadenze!", 4);
