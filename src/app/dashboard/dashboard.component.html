@@ -7,10 +7,67 @@
                         <h4 class="card-title">Prenotazioni</h4>
                     </div>
                     <div class="card-body">
-                        <span>Ci sono {{prenotazioniInRichiesta}} richieste di prenotazioni da gestire.</span>
+                        <span>Ci sono <span class="grande">{{prenotazioniInRichiesta}}</span> richieste di prenotazioni da gestire.</span>
                     </div>
                     <div class="card-footer">
                         <a class="link-utente" href="#/listaPrenotazioni">vai a Prenotazioni</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="card-title">Interventi</h4>
+                    </div>
+                    <div class="card-body">
+                        <span>Ci sono <span class="grande">{{interventiDaChiudere}}</span> interventi da chiudere.</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="link-utente" href="#/listaInterventi">vai a Interventi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!utente.hasPermessi">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="card-title">Prenotazioni</h4>
+                    </div>
+                    <div class="card-body">
+                        <span>Hai <span class="grande">{{prenotazioniInRichiesta}}</span> richieste di prenotazioni in attesa.</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="link-utente" href="#/listaPrenotazioni">vai a Prenotazioni</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="card-title">Guasti</h4>
+                    </div>
+                    <div class="card-body">
+                        <span>Hai segnalato <span class="grande">{{guastiSegnalati}}</span> guasti finora.</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="link-utente" href="#/listaGuasti">vai a Guasti</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="card-title">Multe</h4>
+                    </div>
+                    <div class="card-body">
+                        <span>Finora hai preso <span class="grande">{{multePrese}}</span> multe.</span>
+                    </div>
+                    <div class="card-footer">
+                        <a class="link-utente" href="#/listaMulte">vai a Multe</a>
                     </div>
                 </div>
             </div>

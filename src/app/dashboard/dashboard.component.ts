@@ -14,13 +14,15 @@ export class DashboardComponent implements OnInit {
   utente: Utente;
 
   prenotazioniInRichiesta: number;
+  interventiDaChiudere: number;
+  guastiSegnalati: number;
+  multePrese: number;
   notifiche: string[] = [];
 
   constructor(private sharedService:SharedService, private dataService:DataService, private notificationsComponent: NotificationsComponent) { }
 
   ngOnInit() {
     this.loading = true;
-    this.prenotazioniInRichiesta = 5;
     this.utente = new Utente();
     this.sharedService.checkCredentials();
     if (sessionStorage.getItem("userId") != null && sessionStorage.getItem("userPsw") != null) {
@@ -29,14 +31,32 @@ export class DashboardComponent implements OnInit {
           this.utente = res;
           this.dataService.listNotifiche(this.utente.id).subscribe(
             (res: string[]) => {
-              console.log("NOTIFICHEEEEE");
-              console.table(res);
               this.notifiche = res;
             }, err => {
               this.notificationsComponent.showNotification("top", "center", "Errore durante il recupero delle notifiche!", 4);
-          this.loading = false;
+              this.loading = false;
             }
-          )
+          );
+          if (this.utente.hasPermessi) {
+            this.dataService.listValoriAdmin().subscribe(
+              (res: number[]) => {
+                this.prenotazioniInRichiesta = res[0];
+                this.interventiDaChiudere = res[1];
+                this.multePrese = 0;
+                this.guastiSegnalati = 0;
+              }
+            );
+          }
+          else {
+            this.dataService.listValoriUtente(this.utente.id).subscribe(
+              (res: number[]) => {
+                this.prenotazioniInRichiesta = res[0];
+                this.guastiSegnalati = res[1];
+                this.multePrese = res[2];
+                this.interventiDaChiudere = 0;
+              }
+            );
+          }
           this.loading = false;
         }, err => {
           this.notificationsComponent.showNotification("top", "center", "Errore durante il recupero delle informazioni!", 4);

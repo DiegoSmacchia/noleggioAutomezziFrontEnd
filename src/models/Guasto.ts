@@ -10,5 +10,7 @@ export class Guasto {
 
   constructor() {
     this.id = 0;
+    this.automezzo = new Automezzo();
+    this.utente = new Utente();
   }
 }

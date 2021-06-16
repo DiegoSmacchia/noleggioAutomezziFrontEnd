@@ -95,21 +95,21 @@
                                         {{scadenza.scadenza.scadenza}}
                                     </td>
                                     <td>
-                                        {{scadenza.dataInizio.toLocaleDateString()}}
+                                        {{stampaData(scadenza.dataInizio)}}
                                     </td>
                                     <td>
-                                        {{scadenza.dataFine.toLocaleDateString()}}
+                                        {{stampaData(scadenza.dataFine)}}
                                     </td>
                                     <td>
                                         {{scadenza.kmIniziali}}
                                     </td>
                                     <td>
-                                        {{scadenza.dataPagamento.toLocaleDateString()}}
+                                        {{stampaData(scadenza.dataPagamento)}}
                                     </td>
                                     <td>
-                                    <i class="material-icons icona-verde" matTooltip="Modifica" (click)="modificaScadenza(scadenza)">edit</i>
+                                    <i class="material-icons icona-verde" matTooltip="Modifica" (click)="modificaAutomezzoScadenza(scadenza)">edit</i>
                                     &nbsp;&nbsp;
-                                    <i class="material-icons icona-rossa" matTooltip="Elimina">delete_sweep</i>
+                                    <i class="material-icons icona-rossa" matTooltip="Elimina" (click)="deleteAutomezzoScadenza(scadenza)">delete_sweep</i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -159,7 +159,7 @@
                                     <td>
                                     <i class="material-icons icona-verde" matTooltip="Modifica" (click)="modificaScadenza(scadenza)">edit</i>
                                     &nbsp;&nbsp;
-                                    <i class="material-icons icona-rossa" matTooltip="Elimina">delete_sweep</i>
+                                    <i class="material-icons icona-rossa" matTooltip="Elimina" (click)="deleteScadenza(scadenza)">delete_sweep</i>
                                     </td>
                                 </tr>
                             </tbody>
@@ -209,14 +209,44 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
+                        <div class="col-md-6 col-xs-12"> 
+                            <mat-form-field>
+                                <mat-select [(ngModel)]="autoScadenza.automezzo.id" placeholder="Automezzo" required>
+                                    <mat-option *ngFor="let automezzo of automezzi" [value]="automezzo.id">{{automezzo.marca}} {{automezzo.modello}} ({{automezzo.targa}})</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-xs-12"> 
+                            <mat-form-field>
+                                <mat-select [(ngModel)]="autoScadenza.scadenza.id" placeholder="Scadenza" required>
+                                    <mat-option *ngFor="let scadenza of scadenze" [value]="scadenza.id">{{scadenza.scadenza}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6 col-xs-12">
-                            <div class="col-md-6 col-xs-12">
-                                <mat-form-field>
-                                    <mat-select [(ngModel)]="autoScadenza.automezzo.id" placeholder="Automezzo"required>
-                                        <mat-option *ngFor="let automezzo of automezzi" [value]="automezzo.id">{{automezzo.marca}} {{automezzo.modello}}</mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div>
+                            <mat-form-field>
+                                <input matInput type="date" name="dataInizio" required [(ngModel)]="tempDataInizio" placeholder="Data Inizio">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <mat-form-field>
+                                <input matInput type="date" name="dataFine" [(ngModel)]="autoScadenza.dataFine" placeholder="Data Fine">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <mat-form-field>
+                                <input matInput type="number" min=0 name="kmIniziali" [(ngModel)]="autoScadenza.kmIniziali" placeholder="Km Iniziali">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <mat-form-field>
+                                <input matInput type="date" name="dataPagamento" [(ngModel)]="autoScadenza.dataPagamento" placeholder="Data Pagamento">
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>

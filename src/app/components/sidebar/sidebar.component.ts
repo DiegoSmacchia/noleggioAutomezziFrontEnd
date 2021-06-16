@@ -16,12 +16,16 @@ declare interface RouteInfo {
     onlyAdmin: boolean;
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/account', title: 'Account',  icon: 'account_circle', class: '', onlyAdmin: false },
-    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '', onlyAdmin: false },
+  { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '', onlyAdmin: false },
+  { path: '/account', title: 'Account',  icon: 'manage_accounts', class: '', onlyAdmin: false },
   { path: '/listaAutomezzi', title: 'Lista Automezzi', icon: 'directions_car', class: '', onlyAdmin: true },
   { path: '/listaPrenotazioni', title: 'Lista Prenotazioni', icon: 'event', class: '', onlyAdmin: false },
   { path: '/listaMeccanici', title: 'Lista Meccanici', icon: 'build', class: '', onlyAdmin: true },
-  { path: '/listaScadenze', title: 'Lista Scadenze', icon: 'timer', class: '', onlyAdmin: true }
+  { path: '/listaScadenze', title: 'Lista Scadenze', icon: 'timer', class: '', onlyAdmin: true },
+  { path: '/listaInterventi', title: 'Lista Interventi', icon: 'handyman', class: '', onlyAdmin: true },
+  { path: '/listaGuasti', title: 'Lista Guasti', icon: 'report_problem', class: '', onlyAdmin: false },
+  { path: '/listaMulte', title: 'Lista Multe', icon: 'receipt_long', class: '', onlyAdmin: false }
+
 
 ]
    

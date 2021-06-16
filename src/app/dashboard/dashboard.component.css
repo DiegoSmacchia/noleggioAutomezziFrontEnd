@@ -11,3 +11,7 @@
     text-decoration: underline;
     font-weight: bold;
 }
+.grande{
+    font-weight: bold;
+    font-size:200%;
+}

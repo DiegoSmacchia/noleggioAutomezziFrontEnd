@@ -12,5 +12,8 @@ export class Intervento{
 
   constructor() {
     this.id = 0;
+    this.automezzo = new Automezzo();
+    this.meccanico = new Meccanico();
+    this.guasto = new Guasto();
   }
 }

@@ -45,7 +45,7 @@ export class DataService {
     body.append('username' , utente.username);
     body.append('password', utente.password);
     body.append('cognome', utente.cognome);
-    body.append('dataNascita', utente.dataNascita.toString());
+    body.append('dataNascita', utente.dataNascita.toLocaleDateString());
     body.append('indirizzoEmail', utente.indirizzoEmail);
     return this.httpClient.post(this.baseUrl + "utenti/Update", body);
   }
@@ -79,6 +79,12 @@ export class DataService {
     body.append('costo', automezzo.costo.toString());
     return this.httpClient.post(this.baseUrl + "automezzi/Update", body);
   }
+  deleteAutomezzo(idAutomezzo: number) {
+    let body = new FormData();
+    body.append('id', idAutomezzo.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Automezzi/DeleteAutomezzo", body);
+  }
   /************************************INTERVENTI************************************/
   listInterventi() {
     return this.httpClient.get(this.baseUrl + "Interventi/ListInterventi");
@@ -96,9 +102,18 @@ export class DataService {
     body.append('dataFine', intervento.dataFine.toLocaleDateString());
     return this.httpClient.post(this.baseUrl + "Interventi/UpdateIntervento", body);
   }
+  deleteIntervento(idIntervento: number) {
+    let body = new FormData();
+    body.append('id', idIntervento.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Interventi/DeleteIntervento", body);
+  }
   /************************************GUASTI************************************/
   listGuasti() {
     return this.httpClient.get(this.baseUrl + "Interventi/ListGuasti");
+  }
+  listGuastiByIdUtente(idUtente: number) {
+    return this.httpClient.get(this.baseUrl + "Interventi/ListGuastiByIdUtente/" + idUtente);
   }
   listGuastiByIdAutomezzo(idAutomezzo: number) {
     return this.httpClient.get(this.baseUrl + "Interventi/ListGuastiByIdAutomezzo/" + idAutomezzo);
@@ -112,7 +127,12 @@ export class DataService {
     body.append('data', guasto.data.toLocaleDateString());
     return this.httpClient.post(this.baseUrl + "Interventi/UpdateGuasto", body);
   }
-
+  deleteGuasto(idGuasto: number) {
+    let body = new FormData();
+    body.append('id', idGuasto.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Interventi/DeleteGuasto", body);
+  }
   /************************************PRENOTAZIONI************************************/
   listPrenotazioni(id: number) {
     return this.httpClient.get(this.baseUrl + "Prenotazioni/List/" + (id && id > 0 ? id : ''));
@@ -160,7 +180,7 @@ export class DataService {
     return this.httpClient.get(this.baseUrl + "Multe/ListMulte");
   }
   listMulteByIdUtente(idUtente: number) {
-    return this.httpClient.get(this.baseUrl + "Multe/ListMulte");
+    return this.httpClient.get(this.baseUrl + "Multe/ListMulteByIdUtente/" + idUtente);
   }
   updateMulta(multa: Multa) {
     let body = new FormData();
@@ -170,6 +190,12 @@ export class DataService {
     body.append('data', multa.data.toLocaleDateString());
 
     return this.httpClient.post(this.baseUrl + "Multe/UpdateMulta", body);
+  }
+  deleteMulta(idMulta: number) {
+    let body = new FormData();
+    body.append('id', idMulta.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Multe/DeleteMulta", body);
   }
   /************************************SCADENZE************************************/
   listScadenze() {
@@ -181,6 +207,12 @@ export class DataService {
     body.append('scadenza' , scadenza.scadenza);
     return this.httpClient.post(this.baseUrl + "Scadenze/UpdateScadenza", body);
   }
+  deleteScadenza(idScadenza: number) {
+    let body = new FormData();
+    body.append('id', idScadenza.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Scadenze/DeleteScadenza", body);
+  }
   /************************************AUTOMEZZISCADENZE************************************/
   listAutomezziScadenze(idAutomezzo: number) {
     return this.httpClient.get(this.baseUrl + "Scadenze/ListAutomezziScadenze/" + idAutomezzo);
@@ -190,16 +222,27 @@ export class DataService {
     body.append('id', scadenza.id.toString());
     body.append('idScadenza', scadenza.scadenza.id.toString());
     body.append('idAutomezzo' , scadenza.automezzo.id.toString());
-    body.append('dataInizio', scadenza.dataInizio.toLocaleDateString());
-    body.append('dataFine', scadenza.dataFine.toLocaleDateString());
-    body.append('kmIniziali', scadenza.kmIniziali.toString());
-    body.append('dataPagamento', scadenza.dataPagamento.toLocaleDateString());
+    body.append('dataInizio', scadenza.dataInizio.toISOString());
+    body.append('dataFine', scadenza.dataFine?.toString());
+    body.append('kmIniziali', scadenza.kmIniziali?.toString());
+    body.append('dataPagamento', scadenza.dataPagamento?.toString());
 
-    return this.httpClient.post(this.baseUrl + "Scadenze/UpdateScadenza", body);
+    return this.httpClient.post(this.baseUrl + "Scadenze/UpdateAutomezzoScadenza", body);
   }
-
+  deleteAutomezzoScadenza(idScadenza: number) {
+    let body = new FormData();
+    body.append('id', idScadenza.toString());
+    
+    return this.httpClient.post(this.baseUrl + "Scadenze/DeleteAutomezzoScadenza", body);
+  }
   /************************************NOTIFICHE************************************/
   listNotifiche(idUtente: number) {
     return this.httpClient.get(this.baseUrl + "Notifiche/List/" + idUtente);
+  }
+  listValoriAdmin() {
+    return this.httpClient.get(this.baseUrl + "Notifiche/ListValoriAdmin");
+  }
+  listValoriUtente(idUtente: number) {
+    return this.httpClient.get(this.baseUrl + "Notifiche/ListValoriUtente/" + idUtente);
   }
 }

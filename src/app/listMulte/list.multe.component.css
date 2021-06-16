@@ -1,0 +1,12 @@
+.filler{
+  flex:1;
+}
+.text-strong{
+    font-weight: bold;
+}
+.icona-verde{
+  color: #1e9c1e;
+}
+.icona-rossa{
+  color: #ad1010;
+}

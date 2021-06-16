@@ -1,0 +1,133 @@
+<div class="fab-container">
+    <div class="fab fab-icon-holder">
+      <i class="material-icons">edit</i>
+    </div>
+    <ul class="fab-options">
+      <li *ngIf="!inserimento && utente?.hasPermessi" (click)="aggiungiMulta()">
+        <span class="fab-label">Nuova Multa</span>
+        <div class="fab-icon-holder">
+          <i class="material-icons">add</i>
+        </div>
+      </li>
+      <li *ngIf="!inserimento" (click)="reloadData()">
+        <span class="fab-label">Ricarica</span>
+        <div class="fab-icon-holder">
+          <i class="material-icons">refresh</i>
+        </div>
+      </li>
+      <li *ngIf="inserimento" (click)="annullaInserimento()">
+        <span class="fab-label">Annulla {{multa.id == 0 ? 'inserimento' : 'modifica'}}</span>
+        <div class="fab-icon-holder">
+          <i class="material-icons">close</i>
+        </div>
+      </li>
+      <li *ngIf="inserimento" (click)="confermaInserimento()">
+        <span class="fab-label">Conferma {{multa.id == 0 ? 'inserimento' : 'modifica'}}</span>
+        <div class="fab-icon-holder">
+          <i class="material-icons">check</i>
+        </div>
+      </li>
+    </ul>
+  </div>
+<div class="container-fluid">
+    <div class="row" *ngIf="!inserimento">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-custom">
+                    <h4 class="card-title">Lista multe</h4>
+                    <p class="card-category">elenco multe</p>
+                </div>
+                <div class="card-body">
+                    <div class="loader" *ngIf="loading"></div>
+
+                    <div class="table-responsive" *ngIf="!loading && multe.length > 0">
+                        <table class="table">
+                            <thead class="text-strong">
+                                <th>
+                                    Prenotazione
+                                </th>
+                                <th>
+                                    Importo
+                                </th>
+                                <th>
+                                    Data
+                                </th>
+                                <th *ngIf="utente.hasPermessi">
+                                    Azioni
+                                </th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let multa of multe">
+                                    <td>
+                                        {{stampaData(multa.prenotazione.dataInizio)}}-{{stampaData(multa.prenotazione.dataFine)}}: 
+                                        {{multa.prenotazione.automezzo.targa}} (utente: {{multa.prenotazione.utente.username}})
+                                    </td>
+                                    <td>
+                                        {{multa.importo}}€
+                                    </td>
+                                    <td>
+                                        {{stampaData(multa.data)}}
+                                    </td>
+                                    <td *ngIf="utente.hasPermessi">
+                                    <i class="material-icons icona-verde" matTooltip="Modifica" (click)="modificaMulta(multa)">edit</i>
+                                    &nbsp;&nbsp;
+                                    <i class="material-icons icona-rossa" matTooltip="Elimina" (click)="eliminaMulta(multa)">delete_sweep</i>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div *ngIf="multe.length == 0 && !loading">
+                        <div class="row">
+                            <span class="filler"></span>
+                            <i class="fas fa-question icona-nessun-record"></i>
+                            <span class="filler"></span>
+                        </div>
+                        <div class="row">
+                            <span class="filler"></span>
+                            <span>Nessuna multa presente!</span>
+                            <span class="filler"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row" *ngIf="inserimento">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-custom">
+                    <h4 class="card-title">{{multa.id == 0 ? 'Nuova Multa' : 'Modifica Multa'}}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12">
+                            <mat-form-field>
+                                <input matInput type="number" min=1 [(ngModel)]="multa.importo" placeholder="Importo">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <mat-form-field>
+                                <input matInput type="date" required [(ngModel)]="dataMulta" placeholder="Data" (ngModelChange)="filterPrenotazioni()">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12">
+                            <div class="col-md-6 col-xs-12">
+                                <mat-form-field>
+                                    <mat-select [(ngModel)]="multa.prenotazione.id" placeholder="Prenotazione">
+                                        <mat-option *ngFor="let prenotazione of filteredPrenotazioni" [value]="prenotazione.id">{{stampaData(prenotazione.dataInizio)}}-{{stampaData(prenotazione.dataFine)}}: 
+                                            {{prenotazione.automezzo.targa}} (utente: {{prenotazione.utente.username}})</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

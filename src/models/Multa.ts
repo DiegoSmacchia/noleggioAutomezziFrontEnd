@@ -8,5 +8,6 @@ export class Multa{
   
   constructor() {
     this.id = 0;
+    this.prenotazione = new Prenotazione();
   }
 }

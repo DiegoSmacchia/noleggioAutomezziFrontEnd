@@ -106,5 +106,50 @@ export class ListAutomezziComponent implements OnInit {
     return messaggio;
   }
 
+  eliminaAutomezzo(automezzo: Automezzo) {
+    Swal.fire({
+      title: 'Eliminare l\'Automezzo?',
+      text: "Questa operazione non può essere annullata!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Elimina',
+      cancelButtonText: "No",
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.dataService.deleteAutomezzo(automezzo.id).subscribe(
+          res => {
+            Swal.fire({
+              title: 'Eliminato!',
+              html: "Meccanico eliminato con successo!",
+              icon: 'success',
+              confirmButtonText: 'Ok'
+            });
+            this.reloadData();
+            this.loading = false;
+          }, err => {
+            var messaggio: string;
+            switch (err.status) {
+              case 409:
+                messaggio = "L'automezzo è collegato almeno ad un intervento o ad una prenotazione!";
+                break;
+              default:
+                messaggio = "Qualcosa è andato storto, riprova!";
+                break
+          }
+            Swal.fire({
+              title: 'Errore!',
+              html: messaggio,
+              icon: 'error',
+              confirmButtonText: 'Ok'
+            });
+            this.loading = false;
+          }
+        );
+      }
+    })
+  }
 
 }
