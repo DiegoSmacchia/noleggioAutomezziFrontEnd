@@ -4,7 +4,6 @@ export class Automezzo{
     marca: string;
     modello: string;
     kmAttuali: number;
-    costo: number;
     mezzoDisponibile: boolean;
 
     constructor() {

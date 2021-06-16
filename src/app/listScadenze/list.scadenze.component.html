@@ -34,13 +34,13 @@
         </div>
       </li>
       <li *ngIf="inserimentoAutomezzoScadenza" (click)="annullaInserimentoAutomezzoScadenza()">
-        <span class="fab-label">Annulla {{scadenza.id == 0 ? 'inserimento' : 'modifica'}}</span>
+        <span class="fab-label">Annulla {{autoScadenza.id == 0 ? 'inserimento' : 'modifica'}}</span>
         <div class="fab-icon-holder">
           <i class="material-icons">close</i>
         </div>
       </li>
       <li *ngIf="inserimentoAutomezzoScadenza" (click)="confermaInserimentoAutomezzoScadenza()">
-        <span class="fab-label">Conferma {{scadenza.id == 0 ? 'inserimento' : 'modifica'}}</span>
+        <span class="fab-label">Conferma {{autoScadenza.id == 0 ? 'inserimento' : 'modifica'}}</span>
         <div class="fab-icon-holder">
           <i class="material-icons">check</i>
         </div>
@@ -232,7 +232,7 @@
                         </div>
                         <div class="col-md-6 col-xs-12">
                             <mat-form-field>
-                                <input matInput type="date" name="dataFine" [(ngModel)]="autoScadenza.dataFine" placeholder="Data Fine">
+                                <input matInput type="date" name="dataFine" [(ngModel)]="tempDataFine" placeholder="Data Fine">
                             </mat-form-field>
                         </div>
                     </div>

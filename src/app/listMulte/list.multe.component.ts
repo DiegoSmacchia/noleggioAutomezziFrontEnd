@@ -95,8 +95,6 @@ export class ListMulteComponent implements OnInit {
     this.multa = new Multa();
     this.dataMulta = multa.data?.toString().substring(0, 10);
     Object.assign(this.multa, multa);
-    console.log(this.multa);
-    console.log(this.filteredPrenotazioni);
   }
   annullaInserimento() {
     this.inserimento = false;
@@ -206,11 +204,6 @@ export class ListMulteComponent implements OnInit {
     this.multa.data = new Date(this.dataMulta);
     this.multa.data.setHours(0);
     this.filteredPrenotazioni = this.prenotazioni;
-
-    console.log(new Date(this.filteredPrenotazioni[0].dataFine));
-    console.log(new Date(this.multa.data));
-    console.log(new Date(this.filteredPrenotazioni[0].dataFine).getTime());
-    console.log(new Date(this.multa.data).getTime());
 
     this.filteredPrenotazioni = this.filteredPrenotazioni.filter(item => new Date(item.dataInizio).getTime() <= new Date(this.multa.data).getTime() && new Date(item.dataFine).getTime() >= new Date(this.multa.data).getTime())
   }

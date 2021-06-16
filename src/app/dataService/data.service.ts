@@ -76,7 +76,6 @@ export class DataService {
     body.append('marca' , automezzo.marca);
     body.append('modello', automezzo.modello);
     body.append('kmAttuali', automezzo.kmAttuali.toString());
-    body.append('costo', automezzo.costo.toString());
     return this.httpClient.post(this.baseUrl + "automezzi/Update", body);
   }
   deleteAutomezzo(idAutomezzo: number) {
@@ -222,8 +221,8 @@ export class DataService {
     body.append('id', scadenza.id.toString());
     body.append('idScadenza', scadenza.scadenza.id.toString());
     body.append('idAutomezzo' , scadenza.automezzo.id.toString());
-    body.append('dataInizio', scadenza.dataInizio.toISOString());
-    body.append('dataFine', scadenza.dataFine?.toString());
+    body.append('dataInizio', scadenza.dataInizio.toLocaleDateString());
+    body.append('dataFine', scadenza.dataFine?.toLocaleDateString());
     body.append('kmIniziali', scadenza.kmIniziali?.toString());
     body.append('dataPagamento', scadenza.dataPagamento?.toString());
 

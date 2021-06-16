@@ -101,8 +101,7 @@ export class ListAutomezziComponent implements OnInit {
       
     if (!this.automezzo.kmAttuali || this.automezzo.kmAttuali < 0)
       messaggio += "Inserire il numero di km attuali (Maggiore di 0)!<br>";
-    if (!this.automezzo.costo || this.automezzo.costo < 0)
-      messaggio += "Inserire il costo (Maggiore di 0)!<br>";
+
     return messaggio;
   }
 

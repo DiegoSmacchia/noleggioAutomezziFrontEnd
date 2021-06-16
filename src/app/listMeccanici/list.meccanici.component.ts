@@ -131,7 +131,6 @@ export class ListMeccaniciComponent implements OnInit {
   }
   validateMeccanico(): string {
     var messaggio: string = "";
-    console.log(this.meccanico);
     if (!this.meccanico.ragioneSociale)
       messaggio += "Inserire La Ragione Sociale!<br>";
     

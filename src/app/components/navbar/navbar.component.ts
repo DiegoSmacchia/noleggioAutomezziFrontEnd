@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import {Location} from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedService } from 'app/sharedService/shared.service';
 import { DataService } from 'app/dataService/data.service';
@@ -37,9 +37,7 @@ export class NavbarComponent implements OnInit {
               this.utente = res;
               this.dataService.listNotifiche(this.utente.id).subscribe(
                 (res: string[]) => {
-                  console.log("NOTIFICHEEEEE");
-                      console.table(res);
-                      this.notifiche = res;
+                    this.notifiche = res;
                 }, err => {
                   this.notificationsComponent.showNotification("top", "center", "Errore durante il recupero delle notifiche!", 4);
                 }

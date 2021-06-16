@@ -86,7 +86,6 @@ export class ListPrenotazioniComponent implements OnInit {
   confermaInserimento() {
     this.prenotazione.dataInizio = new Date(this.dataInizioPrenotazione);
     this.prenotazione.dataFine = new Date(this.dataFinePrenotazione);
-    console.log(this.prenotazione);
     var messaggio = this.validatePrenotazione();
     if (messaggio) {
       Swal.fire({
@@ -162,7 +161,7 @@ export class ListPrenotazioniComponent implements OnInit {
     var messaggio: string = "";
     if (!this.prenotazione.automezzo || this.prenotazione.automezzo.id <= 0)
       messaggio += "Scegliere un automezzo!<br>";
-    if (!this.prenotazione.dataInizio || this.prenotazione.dataInizio.getDate() < new Date().getDate())
+    if (!this.prenotazione.dataInizio || this.prenotazione.dataInizio.getTime() < new Date().getTime())
       messaggio += "Scegliere una data di inizio a partire da domani!<br>";
     if (!this.prenotazione.dataFine || this.prenotazione.dataFine.getDate() < this.prenotazione.dataInizio.getDate())
       messaggio += "Scegliere una data di fine a partire dal " + this.prenotazione.dataInizio.toLocaleDateString() + "!<br>";
