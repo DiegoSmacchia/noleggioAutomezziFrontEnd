@@ -152,7 +152,6 @@ export class ListInterventiComponent implements OnInit {
   }
   validateIntervento(): string {
     var messaggio: string = "";
-    console.log(this.intervento.dataInizio);
     if (!this.intervento.automezzo || this.intervento.automezzo.id <= 0)
       messaggio += "Scegliere un automezzo!<br>";
     if (!this.intervento.meccanico || this.intervento.meccanico.id <= 0)
