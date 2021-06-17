@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   nuovoUtente: Utente;
   confermaPassword: string;
   loading: boolean;
+  dataNascita: string;
   constructor(private notificationsComponent: NotificationsComponent, private router:Router, private dataService: DataService) { }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ export class LoginComponent implements OnInit {
   }
   setRegistrazione() {
     this.registrazione = true;
+
     this.nuovoUtente = new Utente();
   }
   setLogin() {
@@ -60,6 +62,7 @@ export class LoginComponent implements OnInit {
     );
   }
   insertUtente() {
+    this.nuovoUtente.dataNascita = new Date(this.dataNascita);
     this.loading = true;
     var messaggio = this.validateUtente();
     if (messaggio) {

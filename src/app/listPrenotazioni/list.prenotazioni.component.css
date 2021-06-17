@@ -6,9 +6,11 @@
 }
 .icona-verde{
   color: #1e9c1e;
+  cursor: pointer;
 }
 .icona-rossa{
   color: #ad1010;
+  cursor: pointer;
 }
 @media (max-width: 900px) {
   .desktop-only{

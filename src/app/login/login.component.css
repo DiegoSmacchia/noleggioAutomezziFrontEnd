@@ -6,6 +6,7 @@
 }
 .link-utente{
     color: #00aeff !important;
+    cursor: pointer;
 }
 .link-utente:visited{
     color:#00aeff !important;
